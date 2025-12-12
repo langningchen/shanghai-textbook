@@ -18,18 +18,18 @@
         "@clack/prompts": "^0.11.0",
         "@types/mime-types": "^3.0.1",
         "adm-zip": "^0.5.16",
-        "mime-types": "^3.0.1",
-        "p-limit": "^7.1.1",
-        "pdfkit": "^0.14.0",
+        "mime-types": "^3.0.2",
+        "p-limit": "^7.2.0",
+        "pdfkit": "^0.17.2",
         "xml2js": "^0.6.2"
     },
     "devDependencies": {
         "@types/adm-zip": "^0.5.7",
-        "@types/node": "^24.3.3",
-        "@types/pdfkit": "^0.17.3",
+        "@types/node": "^25.0.1",
+        "@types/pdfkit": "^0.17.4",
         "@types/xml2js": "^0.4.14",
-        "rimraf": "^5.0.0",
-        "typescript": "^5.9.2"
+        "rimraf": "^6.1.2",
+        "typescript": "^5.9.3"
     },
     "author": "",
     "license": "MIT"
