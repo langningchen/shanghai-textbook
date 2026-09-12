@@ -40,7 +40,7 @@ export class Token {
       url.searchParams.append("signature", await this.getSignature(oldToken));
 
       const tokenResponse = await fetch(url);
-      const { data }: { data: TokenType } = await tokenResponse.json();
+      const { data }: { data: TokenType; } = await tokenResponse.json();
 
       s.message("Getting user profile...");
       const profileUrl = new URL(this.PROFILE_ENDPOINT, this.STUDY_SERVER);
@@ -66,7 +66,7 @@ export class Token {
       s.stop("Token fetched successfully");
       return geniusData.data.token;
     } catch (error) {
-      s.stop("Failed to fetch token", 1);
+      s.stop("Failed to fetch token");
       throw error;
     }
   }
@@ -78,6 +78,9 @@ export class Token {
         "https://sh.etextbook.cn/?token=eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHg%3D",
       validate: (value) => {
         try {
+          if (!value) {
+            return "URL cannot be empty";
+          }
           const url = new URL(value.trim());
           if (url.origin !== "https://sh.etextbook.cn") {
             return "URL must be from https://sh.etextbook.cn";

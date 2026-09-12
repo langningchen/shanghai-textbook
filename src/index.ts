@@ -1,9 +1,24 @@
 import { Server } from "./server.js";
 import { intro, log, outro, spinner } from "@clack/prompts";
 import { BookProcess } from "./bookProcess.js";
-import { writeFileSync } from "fs";
+import { RemoteData } from "./remote.js";
+import { existsSync, mkdirSync, writeFileSync } from "fs";
 
-intro("Shanghai TextBook Token");
+intro("Shanghai TextBook Fetcher");
+if (!existsSync("./books")) {
+  mkdirSync("./books", { recursive: true });
+}
+
+const sRemote = spinner();
+sRemote.start("Fetching remote repository file tree (main branch)...");
+try {
+  await RemoteData.init();
+  sRemote.stop("Fetched remote repository file tree successfully");
+} catch (e) {
+  sRemote.stop(`Failed to fetch remote tree: ${(e as Error).message}`);
+  log.warn("Will only check local files.");
+}
+
 const bookcase = await Server.getBookcase();
 writeFileSync("./books/bookcase.json", JSON.stringify(bookcase, null, 2));
 for (let i = 0; i < bookcase.length; i++) {

@@ -4,6 +4,7 @@ import { Server } from "./server.js";
 import AdmZip from "adm-zip";
 import { Buffer } from "buffer";
 import { PDFDecrypt } from "./pdf/decrypt.js";
+import { RemoteData } from "./remote.js";
 import {
   copyFileSync,
   readdirSync,
@@ -30,6 +31,10 @@ export class BookProcess {
   }
 
   private static async dataExists(uuid: string): Promise<boolean> {
+    if (RemoteData.isBookComplete(uuid)) {
+      return true;
+    }
+
     const jsonExists = statSync(`./books/${uuid}.json`, {
       throwIfNoEntry: false,
     });
@@ -82,7 +87,7 @@ export class BookProcess {
         copyFileSync(src, dest);
         imageCopied = true;
         break;
-      } catch {}
+      } catch { }
     }
     if (!imageCopied) {
       log.warn(`No cover image found for ${bookData.title}`);
