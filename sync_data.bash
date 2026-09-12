@@ -30,7 +30,7 @@ cp -r --verbose --update=none "${ORIG_DIR}/books/"* books/
 CHARS=$(find "${ORIG_DIR}/books" -maxdepth 1 -type f -exec basename {} \; 2>/dev/null | cut -c1 | tr '[:upper:]' '[:lower:]' | grep -E '^[0-9a-f]$' | sort -u)
 
 for char in ${CHARS}; do
-  git add --sparse "books/${char}"* "books/${char^^}"* 2>/dev/null || true
+  git add --sparse "books/${char}"* 2>/dev/null || true
   if ! git diff --cached --quiet; then
     git commit -m "chore(books): sync prefix ${char} (${CURRENT_DATE})"
   fi
